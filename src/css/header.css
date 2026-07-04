@@ -1,0 +1,30 @@
+.main-layout {
+  background-color: var(--primary-color);
+  color: var(--secondary-color);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 84px;
+  max-width: 100%;
+  font-size: 23px;
+  padding: 0px 50px;
+
+  nav ul {
+    display: flex;
+    list-style-type: none;
+    gap: 40px;
+    font-size: 23px;
+  }
+  nav ul li a {
+    text-decoration: none;
+    color: white;
+  }
+  nav ul:hover {
+    color: black;
+  }
+  .icons ul {
+    display: flex;
+    list-style-type: none;
+    gap: 25px;
+  }
+}
