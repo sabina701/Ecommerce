@@ -54,6 +54,18 @@ function reducer(state, action) {
         ),
       };
 
+    case "REMOVE_FROM_CART":
+      const removedProduct = state.cart.find(
+        (product) => product.id === action.payload,
+      );
+
+      toast.success(`${removedProduct.title} removed from cart`);
+
+      return {
+        ...state,
+        cart: state.cart.filter((product) => product.id !== action.payload),
+      };
+
     default:
       return state;
   }

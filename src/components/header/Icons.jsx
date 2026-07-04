@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import LoginRegister from "./LoginRegister";
 const Icons = () => {
+  const [showLogInRegister, setShowLogInRegister] = useState(false);
   return (
     <div className="icons">
       <ul>
@@ -10,7 +12,11 @@ const Icons = () => {
           </Link>
         </li>
         <li>
-          <i class="bi bi-person"></i>
+          <i
+            class="bi bi-person"
+            onClick={() => setShowLogInRegister((prev) => !prev)}
+          ></i>
+          {showLogInRegister && <LoginRegister />}
         </li>
         <li>
           <Link to="/wishlist">

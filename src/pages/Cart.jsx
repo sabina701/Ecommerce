@@ -2,6 +2,7 @@ import React, { useReducer, useState } from "react";
 import "../css/table.css";
 import { useContext } from "react";
 import { BtnContext } from "../context/BtnContext";
+import { toast } from "react-toastify";
 
 const Cart = () => {
   const { state, dispatch } = useContext(BtnContext);
@@ -23,7 +24,18 @@ const Cart = () => {
                 </td>
                 <td className="align-middle">
                   {product.title}
-                  <br /> <p className="text-danger">Remove</p>
+                  <br />{" "}
+                  <p
+                    className="text-danger"
+                    onClick={() =>
+                      dispatch({
+                        type: "REMOVE_FROM_CART",
+                        payload: product.id,
+                      })
+                    }
+                  >
+                    Remove
+                  </p>
                 </td>
 
                 <td className="align-middle">
