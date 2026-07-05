@@ -1,0 +1,53 @@
+.container-fluid {
+  background-color: rgba(0, 0, 0, 0.2);
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  display: grid;
+  place-content: center;
+  z-index: 999;
+  backdrop-filter: blur(2px);
+
+  .container {
+    background-color: white;
+    padding: 2rem 4rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    border-radius: 0.4rem;
+    box-shadow: 1px 1px 1.2px white;
+    position: relative;
+  }
+  .close-btn {
+    color: #242424;
+    text-decoration: none;
+    font-size: 1.8rem;
+    font-weight: 600;
+    position: absolute;
+    right: 36px;
+    top: 12px;
+  }
+  h2 {
+    color: var(--primary-color);
+    font-weight: 900;
+    align-self: center;
+  }
+  input {
+    padding: 1.2rem 2rem;
+    font-size: 1.2rem;
+    border-radius: 0.4rem;
+    border: none;
+    outline: none;
+    border: 0.2px solid blue;
+  }
+  button {
+    padding: 1.2rem 0;
+  }
+  span {
+    color: rgba(10, 50, 255.8);
+    text-decoration: underline;
+    cursor: pointer;
+    align-self: flex-end;
+  }
+}
