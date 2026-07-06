@@ -1,8 +1,19 @@
 import "../css/LogInRegister.css";
+import { useEffect, useRef } from "react";
 export function Login({ show }) {
+  const modelRef = useRef(null);
+  useEffect(() => {
+    function handleModel(event) {
+      if (modelRef.current && !modelRef.current.contains(event.target)) {
+        show(false);
+      }
+    }
+    document.addEventListener("mousedown", handleModel);
+    return () => document.removeEventListener("mousedown", handleModel);
+  }, []);
   return (
     <div className="container-fluid">
-      <form action="" className="container">
+      <form action="" className="container" ref={modelRef}>
         <span className="close-btn" onClick={() => show(false)}>
           x
         </span>
