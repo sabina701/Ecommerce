@@ -1,0 +1,48 @@
+.parent-container {
+  background-color: rgba(0, 0, 0, 0.2);
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  display: grid;
+  place-content: center;
+  z-index: 999;
+  backdrop-filter: blur(2px);
+}
+.child-container {
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  padding: 2rem 5rem;
+
+  /* gap: 5px; */
+  border-radius: 0.4rem;
+  box-shadow: 1px 1px 1.2px white;
+}
+form label {
+  color: black;
+  font-weight: 500;
+}
+
+form input {
+  text-align: center;
+}
+span {
+  align-self: flex-end;
+  color: rgba(10, 50, 255.8);
+
+  cursor: pointer;
+  font-weight: bold;
+}
+.field {
+  position: relative;
+  margin-bottom: 45px;
+}
+
+.errorMessage {
+  position: absolute;
+  margin-top: 10px;
+  color: red;
+  font-size: 16px;
+}

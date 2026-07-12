@@ -1,10 +1,11 @@
 import React from "react";
 import Rating from "./Rating";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useParams } from "react-router-dom";
 const ProductDetail = () => {
   const { id } = useParams();
   const [data, setData] = useState({});
+  const [noOfItem, setNoOfItem] = useState(1);
 
   useEffect(() => {
     async function fetchData() {
@@ -16,6 +17,11 @@ const ProductDetail = () => {
     }
     fetchData();
   }, []);
+  const totalPrice = useMemo(() => {
+    console.log("Calculating total price...");
+    return data.price * noOfItem;
+  }, [data.price, noOfItem]);
+
   return (
     <div>
       <div className="container">
@@ -26,17 +32,38 @@ const ProductDetail = () => {
           <div className="center col-md-4  col-sm-12 ">
             <h2>{data.title}</h2>
             <Rating />
-            <p className="price">Rs. {data.price}</p>
+            <p className="price">Price: Rs. {data.price}</p>
+
             <p className="strike-price">Rs. {parseInt(data.price) + 100}</p>
+
+            <p>Quantity: {noOfItem}</p>
+
+            <h3>Total: Rs. {totalPrice}</h3>
             <p className="text-dark fs-4">Color:</p>
             <p>
               <button className="btn btn-primary">Black</button>
               <button className="btn btn-info ms-3">Gray</button>
             </p>
             <p>
-              <button className="btn btn-primary">-</button>
-              <span className="text-dark m-2">0</span>
-              <button className="btn btn-primary">+</button>
+              <button
+                className="btn btn-primary"
+                onClick={() => {
+                  if (noOfItem > 1) {
+                    setNoOfItem((prev) => prev - 1);
+                  }
+                }}
+              >
+                -
+              </button>
+              <span className="text-dark m-2">{noOfItem}</span>
+              <button
+                className="btn btn-primary"
+                onClick={() => {
+                  setNoOfItem((prev) => prev + 1);
+                }}
+              >
+                +
+              </button>
             </p>
             <p>
               <button className="btn btn-info ">Buy Now</button>
