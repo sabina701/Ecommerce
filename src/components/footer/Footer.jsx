@@ -13,16 +13,24 @@ const Footer = () => {
           </p>
           <div className="social-links">
             <div className="link">
-              <i class="bi bi-facebook"></i>
+              <a href="https://www.facebook.com">
+                <i class="bi bi-facebook"></i>
+              </a>
             </div>
             <div className="link">
-              <i class="bi bi-linkedin"></i>
+              <a href="https://np.linkedin.com">
+                <i class="bi bi-linkedin"></i>
+              </a>
             </div>
             <div className="link">
-              <i class="bi bi-twitter"></i>
+              <a href="https://x.com">
+                <i class="bi bi-twitter"></i>
+              </a>
             </div>
             <div className="link">
-              <i class="bi bi-google"></i>
+              <a href="https://www.google.com">
+                <i class="bi bi-google"></i>
+              </a>
             </div>
           </div>
         </div>
@@ -42,7 +50,7 @@ const Footer = () => {
               <a href="">Blog Posts</a>
             </p>
             <p>
-              <a href="">Contact Us</a>
+              <a href="/contact">Contact Us</a>
             </p>
           </div>
         </div>

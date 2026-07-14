@@ -1,4 +1,4 @@
-import React, { useState, Activity } from "react";
+import { useState, Activity, useEffect } from "react";
 import { Login } from "../LoginRegister";
 import Register from "../Register";
 const LoginRegister = () => {
@@ -6,6 +6,19 @@ const LoginRegister = () => {
     showLogIn: false,
     showRegister: false,
   });
+  const isModalOpen =
+    showLogInRegister.showLogIn || showLogInRegister.showRegister;
+
+  useEffect(() => {
+    if (isModalOpen) {
+      document.documentElement.style.overflow = "hidden";
+    } else {
+      document.documentElement.style.overflow = "auto";
+    }
+    return () => {
+      document.documentElement.style.overflow = "auto";
+    };
+  }, [isModalOpen]);
   return (
     <div>
       <button

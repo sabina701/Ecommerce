@@ -10,6 +10,7 @@ import Layout from "./pages/Layout";
 import ProductDetail from "./pages/ProductDetail";
 import Wishlist from "./pages/Wishlist";
 import Cart from "./pages/Cart";
+import CategoryProducts from "./pages/CategoryProducts";
 const MyRoute = () => {
   return (
     <Routes>
@@ -22,6 +23,7 @@ const MyRoute = () => {
         <Route path="/details/:id" element={<ProductDetail />} />
         <Route path="/Wishlist" element={<Wishlist />} />
         <Route path="/cart" element={<Cart />} />
+        <Route path="/category-products/:id" element={<CategoryProducts />} />
       </Route>
       <Route path="*" element={<Error404 />} />
     </Routes>

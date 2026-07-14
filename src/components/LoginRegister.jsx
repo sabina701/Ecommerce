@@ -26,7 +26,7 @@ export function Login({ show }) {
 
   const [password, setPassword] = useState(false);
   return (
-    <div className="container-fluid">
+    <div className="container-fluid login-register">
       <form
         action=""
         className="container"
