@@ -41,7 +41,7 @@ const CategoryProducts = () => {
   return (
     <>
       <div className="container-fluid">
-        <div className="container">
+        <div className="container categoryProduct-container">
           {/* <div> */}
           {loading
             ? Array.from({ length: 15 }).map((_, index) => (
@@ -52,9 +52,9 @@ const CategoryProducts = () => {
                 .map((product) => <Card key={product.id} product={product} />)}
           {/* </div> */}
         </div>
-        <div className="button-container">
+        <div className="button-container my-btn">
           <button
-            className="btn btn-outline-primary"
+            className="btn btn-outline-primary categoryProduct-button"
             onClick={() => setMore((prev) => prev + 4)}
           >
             Load More

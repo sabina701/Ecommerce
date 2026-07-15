@@ -39,14 +39,14 @@ const Category = () => {
   if (error) return <h2>{error}</h2>;
 
   return (
-    <div className="card-container">
+    <div className="card-container my-card">
       {data.slice(0, 5).map((item) => (
         <div
           className="card"
           key={item.id}
           onClick={() => handleClick(item.id)}
         >
-          <img src={item.image} alt={item.name} />
+          <img src={item.image} alt={item.name} className="category-image" />
           <h3>{item.name}</h3>
         </div>
       ))}

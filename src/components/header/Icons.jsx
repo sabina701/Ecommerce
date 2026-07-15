@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import LoginRegister from "./LoginRegister";
+
 const Icons = () => {
   const [showLogInRegister, setShowLogInRegister] = useState(false);
+
   return (
     <div className="icons">
       <ul>

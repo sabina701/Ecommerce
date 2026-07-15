@@ -9,65 +9,69 @@ const Cart = () => {
 
   return (
     <>
-      <h2 className="text-center">Products in Cart</h2>
       <div className="container">
-        <table class="table table-striped ">
-          {state.cart.map((product) => (
-            <tbody>
-              <tr key={product.id}>
-                <td className="align-middle">
-                  <img
-                    src={product.images[0] || product.images[1]}
-                    w-100
-                    className="image"
-                  />
-                </td>
-                <td className="align-middle">
-                  {product.title}
-                  <br />{" "}
-                  <p
-                    className="text-danger"
-                    onClick={() =>
-                      dispatch({
-                        type: "REMOVE_FROM_CART",
-                        payload: product.id,
-                      })
-                    }
-                  >
-                    Remove
-                  </p>
-                </td>
+        <h2 className="">Products in Cart</h2>
+        {state.cart.length === 0 ? (
+          <p className="text-black ">Nothing in the cart</p>
+        ) : (
+          <table class="table table-striped ">
+            {state.cart.map((product) => (
+              <tbody>
+                <tr key={product.id}>
+                  <td className="align-middle">
+                    <img
+                      src={product.images[0] || product.images[1]}
+                      w-100
+                      className="image"
+                    />
+                  </td>
+                  <td className="align-middle">
+                    {product.title}
+                    <br />{" "}
+                    <p
+                      className="text-danger"
+                      onClick={() =>
+                        dispatch({
+                          type: "REMOVE_FROM_CART",
+                          payload: product.id,
+                        })
+                      }
+                    >
+                      Remove
+                    </p>
+                  </td>
 
-                <td className="align-middle">
-                  <button
-                    className="btn btn-primary"
-                    onClick={() =>
-                      dispatch({
-                        type: "DECREASE_QUANTITY",
-                        payload: product.id,
-                      })
-                    }
-                  >
-                    -
-                  </button>{" "}
-                  <span className="ms-1 me-2">{product.quantity}</span>
-                  <button
-                    className="btn btn-primary ms-1 me-2"
-                    onClick={() =>
-                      dispatch({
-                        type: "INCREASE_QUANTITY",
-                        payload: product.id,
-                      })
-                    }
-                  >
-                    +
-                  </button>
-                </td>
-                <td className="align-middle">Rs. {product.price}</td>
-              </tr>
-            </tbody>
-          ))}
-        </table>
+                  <td className="align-middle">
+                    <button
+                      className="btn btn-primary"
+                      onClick={() =>
+                        dispatch({
+                          type: "DECREASE_QUANTITY",
+                          payload: product.id,
+                        })
+                      }
+                    >
+                      -
+                    </button>{" "}
+                    <span className="ms-1 me-2">{product.quantity}</span>
+                    <button
+                      className="btn btn-primary ms-1 me-2"
+                      onClick={() =>
+                        dispatch({
+                          type: "INCREASE_QUANTITY",
+                          payload: product.id,
+                        })
+                      }
+                    >
+                      +
+                    </button>
+                  </td>
+                  <td className="align-middle">Rs. {product.price}</td>
+                </tr>
+              </tbody>
+            ))}
+          </table>
+        )}
       </div>
     </>
   );

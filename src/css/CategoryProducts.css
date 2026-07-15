@@ -1,4 +1,4 @@
-.container {
+.categoryProduct-container {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -6,21 +6,21 @@
   margin-top: 20px;
 }
 
-.button-container {
+.my-btn {
   display: flex;
   justify-content: center;
   align-items: center;
   margin-top: 40px;
 }
-button {
-  margin-top: 10px;
+.categoryProduct-button {
+  margin-top: 23px;
 }
-.card {
+.all-card {
   width: 18rem;
   min-height: 420px;
 }
 
-.card img {
+.all-card img {
   height: 250px;
   object-fit: cover;
 }

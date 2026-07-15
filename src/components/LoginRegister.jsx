@@ -68,7 +68,7 @@ export function Login({ show }) {
         >
           {password ? "Hide" : "show"}
         </span>
-        <button className="btn btn-primary">Login</button>
+        <button className="btn btn-primary ">Login</button>
         <span>Don't have an account?</span>
       </form>
     </div>

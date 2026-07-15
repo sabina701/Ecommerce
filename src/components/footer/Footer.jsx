@@ -38,16 +38,16 @@ const Footer = () => {
           <h2>Quick Link</h2>
           <div className="py-3">
             <p>
-              <a href="">About Us</a>
+              <a href="/">Home</a>
             </p>
             <p>
-              <a href="">Classes</a>
+              <a href="/products">Products</a>
             </p>
             <p>
-              <a href="">Support</a>
+              <a href="/category">Category</a>
             </p>
             <p>
-              <a href="">Blog Posts</a>
+              <a href="/about"> About Us</a>
             </p>
             <p>
               <a href="/contact">Contact Us</a>

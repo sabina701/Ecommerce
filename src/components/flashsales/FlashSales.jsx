@@ -5,7 +5,7 @@ import Placeholder from "../../Placeholder";
 
 const FlashSales = () => {
   const { data, loading } = useContext(ProductContext);
-  const [more, setMore] = useState(3);
+  const [more, setMore] = useState(4);
 
   return (
     <div className="container">
@@ -21,7 +21,7 @@ const FlashSales = () => {
       </div>
       <div className=" d-flex justify-content-center align-items-center">
         <button
-          className="btn btn-outline-primary w-50 mb-4 textalign-center"
+          className="btn btn-outline-primary w-50 mb-4 textalign-center "
           onClick={() => setMore((prev) => prev + 3)}
         >
           Load More

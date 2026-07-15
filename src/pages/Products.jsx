@@ -5,7 +5,7 @@ import Placeholder from "../Placeholder";
 
 const Products = () => {
   const { data, loading } = useContext(ProductContext);
-  const [more, setMore] = useState(3);
+  const [more, setMore] = useState(4);
 
   return (
     <div className="container">

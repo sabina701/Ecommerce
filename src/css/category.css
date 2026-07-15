@@ -1,4 +1,4 @@
-.card-container {
+.my-card {
   display: flex;
   /* flex-wrap: wrap; */
   flex-wrap: wrap;
@@ -6,7 +6,7 @@
   gap: 25px;
   margin-top: 40px;
 }
-.card img {
+.category-image {
   height: 200px;
   width: 250px;
   padding: 20px;

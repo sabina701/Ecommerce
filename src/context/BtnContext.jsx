@@ -4,17 +4,27 @@ export const BtnContext = createContext();
 function reducer(state, action) {
   switch (action.type) {
     case "ADD_TO_CART":
-      toast.success(`${action.payload.title} added to cart`);
-      return {
-        ...state,
-        cart: [
-          ...state.cart,
-          {
-            ...action.payload,
-            quantity: 1,
-          },
-        ],
-      };
+      const existInCart = state.cart.some(
+        (product) => product.id === action.payload.id,
+      );
+
+      if (!existInCart) {
+        toast.success(`${action.payload.title} added to cart`);
+
+        return {
+          ...state,
+          cart: [
+            ...state.cart,
+            {
+              ...action.payload,
+              quantity: 1,
+            },
+          ],
+        };
+      } else {
+        toast.error(`${action.payload.title} already exists in cart`);
+        return state;
+      }
 
     case "ADD_TO_WISHLIST":
       const exist = state.wishlist.some(
