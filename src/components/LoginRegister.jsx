@@ -1,5 +1,8 @@
 import "../css/LogInRegister.css";
 import { useEffect, useRef, useState } from "react";
+import { toast } from "react-toastify";
+
+import API from "../api/axios";
 export function Login({ show }) {
   const modelRef = useRef(null);
   useEffect(() => {
@@ -17,10 +20,21 @@ export function Login({ show }) {
     password: "",
   });
   const [error, setError] = useState(false);
-  function handleSubmit(event) {
+
+  async function handleSubmit(event) {
     event.preventDefault();
+
     if (userInput.username === "" || userInput.password === "") {
       setError(true);
+      return;
+    }
+
+    try {
+      const res = await API.post("/login", userInput);
+
+      toast.success(res.data.message);
+    } catch (err) {
+      toast.error(err.response.data.message);
     }
   }
 
@@ -37,6 +51,7 @@ export function Login({ show }) {
           x
         </span>
         <h2>Log In</h2>
+
         <label htmlFor="username"></label>
         <input
           type="text"

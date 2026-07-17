@@ -22,7 +22,7 @@ const FlashSales = () => {
       <div className=" d-flex justify-content-center align-items-center">
         <button
           className="btn btn-outline-primary w-50 mb-4 textalign-center "
-          onClick={() => setMore((prev) => prev + 3)}
+          onClick={() => setMore((prev) => prev + 4)}
         >
           Load More
         </button>

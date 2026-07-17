@@ -1,4 +1,5 @@
 import React from "react";
+
 import Btn from "./Btn";
 import { useNavigate } from "react-router-dom";
 
@@ -15,8 +16,8 @@ const Card = ({ product }) => {
         alt={product.title}
       />
       <div className="card-body my-card-body">
-        <h5 className="card-title fw-bold fs-5">{product.title}</h5>
-        <p className="card-text text-dark">
+        <h5 className="card-title fw-bold fs-5 title">{product.title}</h5>
+        <p className="card-text text-dark description">
           {product.description.slice(0, 50)}
         </p>
         <p className="card-text text-dark fw-bold">Rs. {product.price}</p>
