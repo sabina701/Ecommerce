@@ -117,22 +117,22 @@ module.exports.deleteProduct = async (req, res) => {
     });
   }
 };
-// GET ALL CATEGORIES
-module.exports.getCategories = async (req, res) => {
-  try {
-    const categories = await Product.distinct("category");
+// // GET ALL CATEGORIES
+// module.exports.getCategories = async (req, res) => {
+//   try {
+//     const categories = await Product.distinct("category");
 
-    return res.status(200).json({
-      success: true,
-      categories,
-    });
-  } catch (err) {
-    return res.status(500).json({
-      success: false,
-      message: err.message,
-    });
-  }
-};
+//     return res.status(200).json({
+//       success: true,
+//       categories,
+//     });
+//   } catch (err) {
+//     return res.status(500).json({
+//       success: false,
+//       message: err.message,
+//     });
+//   }
+// };
 
 // GET PRODUCTS BY CATEGORY
 module.exports.getProductsByCategory = async (req, res) => {

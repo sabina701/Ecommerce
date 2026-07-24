@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Placeholder from "../Placeholder";
 import Card from "../components/Card";
+import API from "../api/axios";
 import "../css/CategoryProducts.css";
 
 const CategoryProducts = () => {
@@ -15,16 +16,9 @@ const CategoryProducts = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await fetch(
-          `https://api.escuelajs.co/api/v1/categories/${id}/products`,
-        );
+        const response = await API.get(`/products/category/${id}`);
 
-        if (!response.ok) {
-          throw new Error("Failed to fetch products");
-        }
-
-        const result = await response.json();
-        setProducts(result);
+        setProducts(response.data.products);
       } catch (err) {
         setError(err.message);
       } finally {
@@ -49,7 +43,7 @@ const CategoryProducts = () => {
               ))
             : products
                 .slice(0, more)
-                .map((product) => <Card key={product.id} product={product} />)}
+                .map((product) => <Card key={product._id} product={product} />)}
           {/* </div> */}
         </div>
         <div className="button-container my-btn">

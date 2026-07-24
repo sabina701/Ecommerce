@@ -19,6 +19,28 @@ const AddProduct = () => {
       url: "",
     },
   });
+  useEffect(() => {
+    async function checkLogin() {
+      try {
+        await API.get("/check");
+      } catch (err) {
+        toast.error("Please login first");
+        navigate("/login");
+      }
+    }
+
+    checkLogin();
+  }, [navigate]);
+
+  async function handleAddProduct() {
+    try {
+      await API.get("/check");
+      navigate("/add-product");
+    } catch (err) {
+      toast.error("Please login first");
+      navigate("/login");
+    }
+  }
 
   function handleChange(e) {
     const { name, value } = e.target;
@@ -62,6 +84,7 @@ const AddProduct = () => {
       navigate("/products");
     } catch (err) {
       toast.error(err.response?.data?.message || "Something went wrong");
+      navigate("/login");
     }
   }
 
@@ -182,8 +205,9 @@ const AddProduct = () => {
               required
             />
           </div>
-
-          <button className="btn btn-primary ">Add Product</button>
+          <button onClick={handleAddProduct} className="btn btn-primary">
+            Add Product
+          </button>
         </form>
       </div>
     </div>

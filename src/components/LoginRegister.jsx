@@ -3,7 +3,9 @@ import { useEffect, useRef, useState } from "react";
 import { toast } from "react-toastify";
 
 import API from "../api/axios";
+import { useNavigate } from "react-router-dom";
 export function Login({ show }) {
+  const navigate = useNavigate();
   const modelRef = useRef(null);
   useEffect(() => {
     function handleModel(event) {
@@ -33,6 +35,7 @@ export function Login({ show }) {
       const res = await API.post("/login", userInput);
 
       toast.success(res.data.message);
+      navigate("/");
     } catch (err) {
       toast.error(err.response.data.message);
     }

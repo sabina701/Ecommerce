@@ -11,7 +11,7 @@ const Wishlist = () => {
   });
   function handleRemove(event, id) {
     event.stopPropagation();
-    const updated = data.filter((product) => product.id !== id);
+    const updated = data.filter((product) => product._id !== id);
     setData(updated);
     localStorage.setItem("wishlist", JSON.stringify(updated));
     toast.success("Item removed from the wishlist");
@@ -29,7 +29,7 @@ const Wishlist = () => {
           : data.map((product) => (
               <div className="card ">
                 <img
-                  src={product.images[0] || product.images[1]}
+                  src={product.image.url}
                   className="card-img-top"
                   alt={product.title}
                 />
@@ -44,7 +44,7 @@ const Wishlist = () => {
                   </Btn>
                   <button
                     className="btn btn-danger ms-3"
-                    onClick={() => handleRemove(event, product.id)}
+                    onClick={(event) => handleRemove(event, product._id)}
                   >
                     Remove
                   </button>

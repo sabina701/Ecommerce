@@ -1,11 +1,16 @@
 import React, { createContext, useEffect, useReducer } from "react";
 import { toast } from "react-toastify";
+
 export const BtnContext = createContext();
+
 function reducer(state, action) {
   switch (action.type) {
-    case "ADD_TO_CART":
+    case "ADD_TO_CART": {
+      console.log("ADD TO CART CLICKED");
+      console.log("Product:", action.payload);
+      console.log("Current cart:", state.cart);
       const existInCart = state.cart.some(
-        (product) => product.id === action.payload.id,
+        (product) => product._id === action.payload._id,
       );
 
       if (!existInCart) {
@@ -25,24 +30,31 @@ function reducer(state, action) {
         toast.error(`${action.payload.title} already exists in cart`);
         return state;
       }
+    }
 
-    case "ADD_TO_WISHLIST":
+    case "ADD_TO_WISHLIST": {
       const exist = state.wishlist.some(
-        (product) => product.id === action.payload.id,
+        (product) => product._id === action.payload._id,
       );
+
       if (!exist) {
         toast.success(`${action.payload.title} added to wishlist`);
-        return { ...state, wishlist: [...state.wishlist, action.payload] };
+
+        return {
+          ...state,
+          wishlist: [...state.wishlist, action.payload],
+        };
       } else {
-        toast.error(`${action.payload.title} already exist`);
+        toast.error(`${action.payload.title} already exists`);
         return state;
       }
+    }
 
     case "INCREASE_QUANTITY":
       return {
         ...state,
         cart: state.cart.map((product) =>
-          product.id === action.payload
+          product._id === action.payload
             ? {
                 ...product,
                 quantity: product.quantity + 1,
@@ -55,26 +67,29 @@ function reducer(state, action) {
       return {
         ...state,
         cart: state.cart.map((product) =>
-          product.id === action.payload
+          product._id === action.payload
             ? {
                 ...product,
-                quantity: product.quantity > 0 ? product.quantity - 1 : 0,
+                quantity: product.quantity > 1 ? product.quantity - 1 : 1,
               }
             : product,
         ),
       };
 
-    case "REMOVE_FROM_CART":
+    case "REMOVE_FROM_CART": {
       const removedProduct = state.cart.find(
-        (product) => product.id === action.payload,
+        (product) => product._id === action.payload,
       );
 
-      toast.success(`${removedProduct.title} removed from cart`);
+      if (removedProduct) {
+        toast.success(`${removedProduct.title} removed from cart`);
+      }
 
       return {
         ...state,
-        cart: state.cart.filter((product) => product.id !== action.payload),
+        cart: state.cart.filter((product) => product._id !== action.payload),
       };
+    }
 
     default:
       return state;
@@ -99,17 +114,20 @@ const BtnProvider = ({ children }) => {
       }
     })(),
   };
+
   const [state, dispatch] = useReducer(reducer, initialState);
+
   useEffect(() => {
     localStorage.setItem("cart", JSON.stringify(state.cart));
+
     localStorage.setItem("wishlist", JSON.stringify(state.wishlist));
   }, [state.cart, state.wishlist]);
+
   return (
-    <>
-      <BtnContext.Provider value={{ state, dispatch }}>
-        {children}
-      </BtnContext.Provider>
-    </>
+    <BtnContext.Provider value={{ state, dispatch }}>
+      {children}
+    </BtnContext.Provider>
   );
 };
+
 export default BtnProvider;

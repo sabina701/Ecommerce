@@ -17,7 +17,7 @@ const Products = () => {
             ))
           : data
               .slice(0, more)
-              .map((product) => <Card key={product.id} product={product} />)}
+              .map((product) => <Card key={product._id} product={product} />)}
       </div>
       <div className=" d-flex justify-content-center align-items-center">
         <button

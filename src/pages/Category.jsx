@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "../css/category.css";
+import API from "../api/axios";
 import { useNavigate } from "react-router-dom";
 
 const Category = () => {
@@ -8,23 +9,16 @@ const Category = () => {
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
-  function handleClick(id) {
-    navigate("/category-products/" + id);
+  function handleClick(categoryName) {
+    navigate("/category-products/" + categoryName);
   }
 
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const response = await fetch(
-          "https://api.escuelajs.co/api/v1/categories",
-        );
+        const response = await API.get("/categories");
 
-        if (!response.ok) {
-          throw new Error("Failed to fetch categories");
-        }
-
-        const result = await response.json();
-        setData(result);
+        setData(response.data.categories);
       } catch (err) {
         setError(err.message);
       } finally {
@@ -40,14 +34,19 @@ const Category = () => {
 
   return (
     <div className="card-container my-card">
-      {data.slice(0, 5).map((item) => (
+      {data.map((category) => (
         <div
           className="card"
-          key={item.id}
-          onClick={() => handleClick(item.id)}
+          key={category._id}
+          onClick={() => handleClick(category.name)}
         >
-          <img src={item.image} alt={item.name} className="category-image" />
-          <h3>{item.name}</h3>
+          <img
+            src={category.image}
+            alt={category.name}
+            className="category-image"
+          />
+
+          <h3>{category.name}</h3>
         </div>
       ))}
     </div>

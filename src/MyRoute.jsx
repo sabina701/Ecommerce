@@ -11,6 +11,9 @@ import ProductDetail from "./pages/ProductDetail";
 import Wishlist from "./pages/Wishlist";
 import Cart from "./pages/Cart";
 import CategoryProducts from "./pages/CategoryProducts";
+import EditProduct from "./pages/EditProduct";
+import AddProduct from "./pages/AddProduct";
+import Login from "./pages/Login";
 const MyRoute = () => {
   return (
     <Routes>
@@ -24,6 +27,9 @@ const MyRoute = () => {
         <Route path="/Wishlist" element={<Wishlist />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/category-products/:id" element={<CategoryProducts />} />
+        <Route path="/add-product" element={<AddProduct />} />
+        <Route path="/edit/:id" element={<EditProduct />} />
+        <Route path="/login" element={<Login />} />
       </Route>
       <Route path="*" element={<Error404 />} />
     </Routes>

@@ -1,5 +1,6 @@
 import React from "react";
 import Rating from "./Rating";
+import API from "../api/axios";
 import { useState, useEffect, useMemo } from "react";
 import { useParams } from "react-router-dom";
 const ProductDetail = () => {
@@ -9,25 +10,26 @@ const ProductDetail = () => {
 
   useEffect(() => {
     async function fetchData() {
-      const response = await fetch(
-        `https://api.escuelajs.co/api/v1/products/${id}`,
-      );
-      const data = await response.json();
-      setData(data);
+      try {
+        const response = await API.get(`/products/${id}`);
+        setData(response.data.product);
+      } catch (err) {
+        console.log(err);
+      }
     }
-    fetchData();
-  }, []);
-  const totalPrice = useMemo(() => {
-    console.log("Calculating total price...");
-    return data.price * noOfItem;
-  }, [data.price, noOfItem]);
 
+    fetchData();
+  }, [id]);
+
+  const totalPrice = useMemo(() => {
+    return (data.price || 0) * noOfItem;
+  }, [data.price, noOfItem]);
   return (
     <div>
       <div className="container">
         <div className="row ">
           <div className="left col-md-4 col-sm-12 detail-img">
-            <img src={data.images?.[0]} alt={data.title} />
+            <img src={data.image?.url} alt={data.title} />
           </div>
           <div className="center col-md-4  col-sm-12 ">
             <h2>{data.title}</h2>
