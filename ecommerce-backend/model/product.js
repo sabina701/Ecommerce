@@ -50,7 +50,12 @@ const productSchema = new Schema(
           "https://cdn.prod.website-files.com/5ee0a01b09389eebf4c09b45/667c48d1ac844e8c613ee3e6_1CK-Mobile.webp",
       },
     },
+    owner: {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+    },
   },
+
   {
     timestamps: true,
   },

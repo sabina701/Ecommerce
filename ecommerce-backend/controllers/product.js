@@ -4,7 +4,7 @@ const Product = require("../model/product.js");
 module.exports.createProduct = async (req, res) => {
   try {
     const product = new Product(req.body);
-
+    product.owner = req.user._id;
     const savedProduct = await product.save();
 
     return res.status(201).json({
@@ -23,7 +23,7 @@ module.exports.createProduct = async (req, res) => {
 // GET ALL PRODUCTS
 module.exports.getAllProducts = async (req, res) => {
   try {
-    const products = await Product.find({});
+    const products = await Product.find({}).populate("owner");
 
     return res.status(200).json({
       success: true,
@@ -37,12 +37,12 @@ module.exports.getAllProducts = async (req, res) => {
   }
 };
 
-// GET SINGLE PRODUCT
+// GET SINGLE PRODUCT SHOW ROUTE
 module.exports.getSingleProduct = async (req, res) => {
   try {
     const { id } = req.params;
 
-    const product = await Product.findById(id);
+    const product = await Product.findById(id).populate("owner");
 
     if (!product) {
       return res.status(404).json({
@@ -68,17 +68,30 @@ module.exports.updateProduct = async (req, res) => {
   try {
     const { id } = req.params;
 
-    const updatedProduct = await Product.findByIdAndUpdate(id, req.body, {
-      new: true,
-      runValidators: true,
-    });
+    // 1. Find product first
+    const product = await Product.findById(id);
 
-    if (!updatedProduct) {
+    // 2. Product not found
+    if (!product) {
       return res.status(404).json({
         success: false,
         message: "Product Not Found",
       });
     }
+
+    // 3. Check ownership
+    if (!product.owner.equals(req.user._id)) {
+      return res.status(403).json({
+        success: false,
+        message: "You are not the owner of this product",
+      });
+    }
+
+    // 4. Update only if owner
+    const updatedProduct = await Product.findByIdAndUpdate(id, req.body, {
+      new: true,
+      runValidators: true,
+    });
 
     return res.status(200).json({
       success: true,
@@ -93,18 +106,30 @@ module.exports.updateProduct = async (req, res) => {
   }
 };
 // DELETE PRODUCT
+// DELETE PRODUCT
 module.exports.deleteProduct = async (req, res) => {
   try {
     const { id } = req.params;
 
-    const deletedProduct = await Product.findByIdAndDelete(id);
+    // Find product first
+    const product = await Product.findById(id);
 
-    if (!deletedProduct) {
+    if (!product) {
       return res.status(404).json({
         success: false,
         message: "Product Not Found",
       });
     }
+
+    // Check owner
+    if (!product.owner.equals(req.user._id)) {
+      return res.status(403).json({
+        success: false,
+        message: "You are not the owner of this product",
+      });
+    }
+
+    await Product.findByIdAndDelete(id);
 
     return res.status(200).json({
       success: true,

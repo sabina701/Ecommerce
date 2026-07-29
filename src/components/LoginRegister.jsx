@@ -1,12 +1,16 @@
 import "../css/LogInRegister.css";
 import { useEffect, useRef, useState } from "react";
 import { toast } from "react-toastify";
+import { useContext } from "react";
+import { AuthContext } from "../context/AuthContext";
 
 import API from "../api/axios";
 import { useNavigate } from "react-router-dom";
-export function Login({ show }) {
+export function Login({ show, setIsLoggedIn, from }) {
   const navigate = useNavigate();
+  const { setCurrentUser } = useContext(AuthContext);
   const modelRef = useRef(null);
+
   useEffect(() => {
     function handleModel(event) {
       if (modelRef.current && !modelRef.current.contains(event.target)) {
@@ -35,7 +39,16 @@ export function Login({ show }) {
       const res = await API.post("/login", userInput);
 
       toast.success(res.data.message);
-      navigate("/");
+
+      setIsLoggedIn(true);
+      const userRes = await API.get("/check");
+      setCurrentUser(userRes.data.user);
+
+      show({
+        showLogIn: false,
+        showRegister: false,
+      });
+      navigate(from);
     } catch (err) {
       toast.error(err.response.data.message);
     }
@@ -86,7 +99,9 @@ export function Login({ show }) {
         >
           {password ? "Hide" : "show"}
         </span>
+
         <button className="btn btn-primary ">Login</button>
+
         <span>Don't have an account?</span>
       </form>
     </div>

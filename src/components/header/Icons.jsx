@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import LoginRegister from "./LoginRegister";
 import API from "../../api/axios";
 import { toast } from "react-toastify";
+import { requireAuth } from "../../utils/requireAuth";
 
 const Icons = () => {
   const navigate = useNavigate();
@@ -11,12 +12,10 @@ const Icons = () => {
   async function handleAddProduct(e) {
     e.preventDefault();
 
-    try {
-      await API.get("/check");
+    const ok = await requireAuth(navigate, "/add-product");
+
+    if (ok) {
       navigate("/add-product");
-    } catch (err) {
-      toast.error("Please login first");
-      navigate("/login");
     }
   }
 
@@ -31,12 +30,13 @@ const Icons = () => {
           >
             Add a Product
           </Link>
-          &nbsp; &nbsp;
+          &nbsp;&nbsp;
           <Link to="/cart">
             <i className="bi bi-cart"></i>
           </Link>
         </li>
 
+        {/* Login/Register */}
         <li>
           <i
             className="bi bi-person"

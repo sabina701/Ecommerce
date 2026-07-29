@@ -5,16 +5,18 @@ import App from "./App.jsx";
 import { BrowserRouter } from "react-router-dom";
 import { ProductProvider } from "./context/ProductContext.jsx";
 import BtnProvider from "./context/BtnContext.jsx";
+import AuthProvider from "./context/AuthContext.jsx";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <ProductProvider>
-      <BtnProvider>
-        <BrowserRouter>
-          <App />
-        </BrowserRouter>
-      </BtnProvider>
-    </ProductProvider>
-    ,
+    <AuthProvider>
+      <ProductProvider>
+        <BtnProvider>
+          <BrowserRouter>
+            <App />
+          </BrowserRouter>
+        </BtnProvider>
+      </ProductProvider>
+    </AuthProvider>
   </StrictMode>,
 );

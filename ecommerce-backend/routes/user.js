@@ -7,6 +7,8 @@ router.post("/signup", userController.signup);
 
 router.post("/login", userController.login);
 
+router.post("/logout", userController.logout);
+
 // Check if user is logged in
 router.get("/check", (req, res) => {
   if (req.isAuthenticated()) {

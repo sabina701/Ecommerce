@@ -1,11 +1,22 @@
 import { useState, Activity, useEffect } from "react";
 import { Login } from "../LoginRegister";
+import { useNavigate, useLocation } from "react-router-dom";
+import API from "../../api/axios";
+import { toast } from "react-toastify";
 import Register from "../Register";
+
 const LoginRegister = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from || "/";
+
   const [showLogInRegister, setShowLogInRegister] = useState({
     showLogIn: false,
     showRegister: false,
   });
+
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
   const isModalOpen =
     showLogInRegister.showLogIn || showLogInRegister.showRegister;
 
@@ -15,40 +26,87 @@ const LoginRegister = () => {
     } else {
       document.documentElement.style.overflow = "auto";
     }
+
     return () => {
       document.documentElement.style.overflow = "auto";
     };
   }, [isModalOpen]);
+
+  // Check login status
+  useEffect(() => {
+    const checkLogin = async () => {
+      try {
+        await API.get("/check");
+        setIsLoggedIn(true);
+      } catch (err) {
+        setIsLoggedIn(false);
+      }
+    };
+
+    checkLogin();
+  }, []);
+
+  const handleLogout = async () => {
+    try {
+      const res = await API.post("/logout");
+
+      if (res.data.success) {
+        toast.success(res.data.message);
+        setIsLoggedIn(false);
+        navigate("/");
+      }
+    } catch (err) {
+      toast.error("Logout failed");
+    }
+  };
+
   return (
     <div>
-      <button
-        className="btn btn-primary"
-        onClick={() =>
-          setShowLogInRegister({
-            ...showLogInRegister,
-            showLogIn: true,
-          })
-        }
+      <select
+        className="form-select"
+        defaultValue=""
+        onChange={(e) => {
+          if (e.target.value === "login") {
+            setShowLogInRegister({
+              ...showLogInRegister,
+              showLogIn: true,
+            });
+          } else if (e.target.value === "signup") {
+            setShowLogInRegister({
+              ...showLogInRegister,
+              showRegister: true,
+            });
+          } else if (e.target.value === "logout") {
+            handleLogout();
+          }
+
+          e.target.value = "";
+        }}
       >
-        LogIn
-      </button>
-      &nbsp;&nbsp;
-      <button
-        className="btn btn-success"
-        onClick={() =>
-          setShowLogInRegister({
-            ...showLogInRegister,
-            showRegister: true,
-          })
-        }
-      >
-        SignUp
-      </button>
+        <option value="" disabled>
+          Account
+        </option>
+
+        {!isLoggedIn && (
+          <>
+            <option value="login">Login</option>
+            <option value="signup">Sign Up</option>
+          </>
+        )}
+
+        {isLoggedIn && <option value="logout">Logout</option>}
+      </select>
+
       <Activity mode={showLogInRegister.showLogIn ? "visible" : "hidden"}>
-        <Login show={setShowLogInRegister} />
+        <Login
+          show={setShowLogInRegister}
+          setIsLoggedIn={setIsLoggedIn}
+          from={from}
+        />
       </Activity>
+
       <Activity mode={showLogInRegister.showRegister ? "visible" : "hidden"}>
-        <Register show={setShowLogInRegister} />
+        <Register show={setShowLogInRegister} setIsLoggedIn={setIsLoggedIn} />
       </Activity>
     </div>
   );

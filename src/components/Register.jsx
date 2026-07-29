@@ -6,7 +6,7 @@ import "../css/Register.css";
 import API from "../api/axios";
 import { toast } from "react-toastify";
 
-const Register = ({ show }) => {
+const Register = ({ show, setIsLoggedIn }) => {
   const modelRef = useRef(null);
 
   useEffect(() => {
@@ -63,8 +63,8 @@ const Register = ({ show }) => {
     try {
       const result = await API.post("/signup", data);
 
-      console.log(result.data);
       toast.success(result.data.message);
+      setIsLoggedIn(true);
 
       show(false);
     } catch (err) {

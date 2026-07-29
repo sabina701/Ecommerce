@@ -3,6 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import API from "../api/axios";
 import { toast } from "react-toastify";
 import { ProductContext } from "../context/ProductContext";
+import { requireAuth } from "../utils/requireAuth";
 
 const EditProduct = () => {
   const { id } = useParams();
@@ -70,17 +71,20 @@ const EditProduct = () => {
 
     try {
       await updateProduct(id, formData);
-
+      toast.success("Product updated successfully");
       navigate("/products");
     } catch (err) {
-      toast.error(err.response?.data?.message || "Something went wrong");
+      if (err.response?.status === 403) {
+        toast.error(err.response.data.message);
+        navigate("/products");
+      } else {
+        toast.error(err.response?.data?.message || "Something went wrong");
+      }
     }
   }
-
   if (loading) {
     return <h2 className="text-center mt-5">Loading...</h2>;
   }
-
   return (
     <div className="row mt-3 offset-3">
       <div className="col-8">

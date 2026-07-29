@@ -48,17 +48,6 @@ app.use("/", userRoutes);
 app.use("/products", productRoutes);
 app.use("/categories", categoryRoutes);
 
-app.get("/test", async (req, res) => {
-  let cate = new category({
-    name: "fijajj",
-    image:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSTFhj3WcsI_gNq_LE0jwi1xoIDZcciJGnKWhITRz42ovugRB78pyiDY1ZH&s=10",
-  });
-  await cate.save();
-  res.send(cate);
-  console.log("data was saved");
-});
-
 app.listen(5000, () => {
   console.log("Server running on port 5000");
 });

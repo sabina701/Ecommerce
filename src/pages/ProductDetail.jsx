@@ -26,13 +26,16 @@ const ProductDetail = () => {
   }, [data.price, noOfItem]);
   return (
     <div>
-      <div className="container">
+      <div className="container mt-5">
         <div className="row ">
-          <div className="left col-md-4 col-sm-12 detail-img">
+          <div className="left col-md-4 col-sm-12 detail-img ">
             <img src={data.image?.url} alt={data.title} />
           </div>
-          <div className="center col-md-4  col-sm-12 ">
-            <h2>{data.title}</h2>
+          <div className="center col-md-4  col-sm-12  ">
+            <h3>Owned By @{data.owner?.username}</h3>
+            <br />
+            <h4>{data.title}</h4>
+            <br />
             <Rating />
             <p className="price">Price: Rs. {data.price}</p>
 

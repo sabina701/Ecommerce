@@ -1,14 +1,51 @@
 import React, { useContext } from "react";
 import Btn from "./Btn";
 import { useNavigate } from "react-router-dom";
+import API from "../api/axios";
+import { toast } from "react-toastify";
+import { AuthContext } from "../context/AuthContext";
 import { ProductContext } from "../context/ProductContext";
 
 const Card = ({ product }) => {
   const navigate = useNavigate();
   const { deleteProduct } = useContext(ProductContext);
+  const { currentUser } = useContext(AuthContext);
 
   function handleClick() {
     navigate("/details/" + product._id);
+  }
+  async function handleDelete(e, id) {
+    e.stopPropagation();
+
+    try {
+      await API.get("/check");
+      await deleteProduct(id);
+    } catch (err) {
+      if (err.response?.status === 401) {
+        toast.error("Please login first");
+        navigate("/login");
+      } else if (err.response?.status === 403) {
+        toast.error(err.response.data.message);
+      } else {
+        toast.error("Failed to delete product");
+      }
+    }
+  }
+  async function handleEdit(e, id) {
+    e.stopPropagation();
+
+    try {
+      await API.get("/check");
+
+      navigate("/edit/" + id);
+    } catch (err) {
+      if (err.response?.status === 401) {
+        toast.error("Please login first");
+        navigate("/login");
+      } else {
+        toast.error("Something went wrong");
+      }
+    }
   }
 
   return (
@@ -38,21 +75,17 @@ const Card = ({ product }) => {
               Add to Wishlist
             </Btn>
           </div>
+
           <button
             className="btn btn-warning mt-3"
-            onClick={(e) => {
-              e.stopPropagation();
-              navigate("/edit/" + product._id);
-            }}
+            onClick={(e) => handleEdit(e, product._id)}
           >
             Edit
           </button>
+
           <button
             className="btn btn-danger mt-3"
-            onClick={(e) => {
-              e.stopPropagation();
-              deleteProduct(product._id);
-            }}
+            onClick={(e) => handleDelete(e, product._id)}
           >
             Delete
           </button>

@@ -1,15 +1,23 @@
 const passport = require("passport");
 const User = require("../model/user.js");
-module.exports.signup = async (req, res) => {
+module.exports.signup = async (req, res, next) => {
   try {
     let { username, email, password, confirmPassword } = req.body;
     const newUser = new User({ username, email });
     const registeredUser = await User.register(newUser, password);
-    console.log(registeredUser);
+    req.login(registeredUser, (err) => {
+      if (err) {
+        return next(err);
+      }
+    });
 
     return res.status(201).json({
       success: true,
       message: "Registration Successful",
+      user: {
+        username: registeredUser.username,
+        email: registeredUser.email,
+      },
     });
   } catch (e) {
     return res.status(400).json({
@@ -47,4 +55,20 @@ module.exports.login = (req, res, next) => {
       });
     });
   })(req, res, next);
+};
+
+module.exports.logout = (req, res) => {
+  req.logout((err) => {
+    if (err) {
+      return res.status(500).json({
+        success: false,
+        message: "Logout failed",
+      });
+    }
+
+    res.json({
+      success: true,
+      message: "Logout successful",
+    });
+  });
 };
