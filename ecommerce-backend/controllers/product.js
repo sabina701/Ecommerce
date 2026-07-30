@@ -41,8 +41,15 @@ module.exports.getAllProducts = async (req, res) => {
 module.exports.getSingleProduct = async (req, res) => {
   try {
     const { id } = req.params;
-
-    const product = await Product.findById(id).populate("owner");
+    const product = await Product.findById(id)
+      .populate("owner")
+      .populate({
+        path: "reviews",
+        populate: {
+          path: "author",
+          select: "username",
+        },
+      });
 
     if (!product) {
       return res.status(404).json({
@@ -105,7 +112,7 @@ module.exports.updateProduct = async (req, res) => {
     });
   }
 };
-// DELETE PRODUCT
+
 // DELETE PRODUCT
 module.exports.deleteProduct = async (req, res) => {
   try {

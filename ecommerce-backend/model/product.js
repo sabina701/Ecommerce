@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-
+const Review = require("./review");
 const Schema = mongoose.Schema;
 
 const productSchema = new Schema(
@@ -54,11 +54,26 @@ const productSchema = new Schema(
       type: Schema.Types.ObjectId,
       ref: "User",
     },
+    reviews: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Review",
+      },
+    ],
   },
 
   {
     timestamps: true,
   },
 );
+
+productSchema.post("findOneAndDelete", async (product) => {
+  if (product) {
+    await Review.deleteMany({
+      _id: { $in: product.reviews },
+    });
+  }
+});
 const product = mongoose.model("Product", productSchema);
+
 module.exports = product;

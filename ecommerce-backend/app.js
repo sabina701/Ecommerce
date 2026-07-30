@@ -12,6 +12,7 @@ const userRoutes = require("./routes/user.js");
 const productRoutes = require("./routes/product");
 const category = require("./model/category.js");
 const categoryRoutes = require("./routes/category");
+const reviewRoutes = require("./routes/review.js");
 async function main() {
   await mongoose.connect("mongodb://127.0.0.1:27017/ecommerce");
 }
@@ -45,6 +46,7 @@ passport.deserializeUser(User.deserializeUser());
 
 app.use(express.json());
 app.use("/", userRoutes);
+app.use("/products/:id/reviews", reviewRoutes);
 app.use("/products", productRoutes);
 app.use("/categories", categoryRoutes);
 
