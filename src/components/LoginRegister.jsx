@@ -6,7 +6,7 @@ import { AuthContext } from "../context/AuthContext";
 
 import API from "../api/axios";
 import { useNavigate } from "react-router-dom";
-export function Login({ show, setIsLoggedIn, from }) {
+export function Login({ show, from }) {
   const navigate = useNavigate();
   const { setCurrentUser } = useContext(AuthContext);
   const modelRef = useRef(null);
@@ -40,17 +40,22 @@ export function Login({ show, setIsLoggedIn, from }) {
 
       toast.success(res.data.message);
 
-      setIsLoggedIn(true);
-      const userRes = await API.get("/check");
-      setCurrentUser(userRes.data.user);
+      // Mark user as logged in immediately
+      // setIsLoggedIn(true);
+
+      // Don't call /check immediately after login
+      setCurrentUser({
+        username: userInput.username,
+      });
 
       show({
         showLogIn: false,
         showRegister: false,
       });
-      navigate(from);
+
+      navigate(from || "/");
     } catch (err) {
-      toast.error(err.response.data.message);
+      toast.error(err.response?.data?.message || "Login failed");
     }
   }
 

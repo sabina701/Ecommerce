@@ -19,28 +19,28 @@ const AddProduct = () => {
       url: "",
     },
   });
-  // useEffect(() => {
-  //   async function checkLogin() {
-  //     try {
-  //       await API.get("/check");
-  //     } catch (err) {
-  //       toast.error("Please login first");
-  //       navigate("/login");
-  //     }
-  //   }
+  useEffect(() => {
+    async function checkLogin() {
+      try {
+        await API.get("/check");
+      } catch (err) {
+        toast.error("Please login first");
+        navigate("/login");
+      }
+    }
 
-  //   checkLogin();
-  // }, [navigate]);
+    checkLogin();
+  }, [navigate]);
 
-  // async function handleAddProduct() {
-  //   try {
-  //     await API.get("/check");
-  //     navigate("/add-product");
-  //   } catch (err) {
-  //     toast.error("Please login first");
-  //     navigate("/login");
-  //   }
-  // }
+  async function handleAddProduct() {
+    try {
+      await API.get("/check");
+      navigate("/add-product");
+    } catch (err) {
+      toast.error("Please login first");
+      navigate("/login");
+    }
+  }
 
   function handleChange(e) {
     const { name, value } = e.target;
@@ -64,7 +64,6 @@ const AddProduct = () => {
     async function fetchCategories() {
       try {
         const response = await API.get("/categories");
-        console.log(response.data); // add this
         setCategories(response.data.categories);
       } catch (err) {
         console.log(err);
@@ -206,7 +205,9 @@ const AddProduct = () => {
               required
             />
           </div>
-          <button className="btn btn-primary">Add Product</button>
+          <button type="submit" className="btn btn-primary">
+            Add Product
+          </button>
         </form>
       </div>
     </div>

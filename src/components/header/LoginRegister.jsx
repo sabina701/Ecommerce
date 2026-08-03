@@ -1,9 +1,10 @@
-import { useState, Activity, useEffect } from "react";
+import { useState, Activity, useEffect, useContext } from "react";
 import { Login } from "../LoginRegister";
 import { useNavigate, useLocation } from "react-router-dom";
-import API from "../../api/axios";
+import { AuthContext } from "../../context/AuthContext";
 import { toast } from "react-toastify";
 import Register from "../Register";
+import API from "../../api/axios";
 
 const LoginRegister = () => {
   const navigate = useNavigate();
@@ -15,7 +16,8 @@ const LoginRegister = () => {
     showRegister: false,
   });
 
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const { currentUser, setCurrentUser } = useContext(AuthContext);
+  const isLoggedIn = !!currentUser;
 
   const isModalOpen =
     showLogInRegister.showLogIn || showLogInRegister.showRegister;
@@ -33,26 +35,28 @@ const LoginRegister = () => {
   }, [isModalOpen]);
 
   // Check login status
-  useEffect(() => {
-    const checkLogin = async () => {
-      try {
-        await API.get("/check");
-        setIsLoggedIn(true);
-      } catch (err) {
-        setIsLoggedIn(false);
-      }
-    };
+  // useEffect(() => {
+  //   const checkLogin = async () => {
+  //     try {
+  //       await API.get("/check");
+  //       setIsLoggedIn(true);
+  //     } catch (err) {
+  //       setIsLoggedIn(false);
+  //     }
+  //   };
 
-    checkLogin();
-  }, []);
-
+  //   checkLogin();
+  // }, []);
   const handleLogout = async () => {
     try {
       const res = await API.post("/logout");
 
       if (res.data.success) {
         toast.success(res.data.message);
-        setIsLoggedIn(false);
+
+        // Clear global user
+        setCurrentUser(null);
+
         navigate("/");
       }
     } catch (err) {
@@ -98,15 +102,11 @@ const LoginRegister = () => {
       </select>
 
       <Activity mode={showLogInRegister.showLogIn ? "visible" : "hidden"}>
-        <Login
-          show={setShowLogInRegister}
-          setIsLoggedIn={setIsLoggedIn}
-          from={from}
-        />
+        <Login show={setShowLogInRegister} from={from} />
       </Activity>
 
       <Activity mode={showLogInRegister.showRegister ? "visible" : "hidden"}>
-        <Register show={setShowLogInRegister} setIsLoggedIn={setIsLoggedIn} />
+        <Register show={setShowLogInRegister} />
       </Activity>
     </div>
   );

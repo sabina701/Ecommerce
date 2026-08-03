@@ -1,15 +1,18 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import LoginRegister from "./LoginRegister";
-import API from "../../api/axios";
-import { toast } from "react-toastify";
+import { AuthContext } from "../../context/AuthContext";
 import { requireAuth } from "../../utils/requireAuth";
 
 const Icons = () => {
   const navigate = useNavigate();
   const [showLogInRegister, setShowLogInRegister] = useState(false);
 
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  // Use global auth state
+  const { currentUser } = useContext(AuthContext);
+
+  const isLoggedIn = !!currentUser;
+
   async function handleAddProduct(e) {
     e.preventDefault();
 
@@ -19,18 +22,6 @@ const Icons = () => {
       navigate("/add-product");
     }
   }
-  useEffect(() => {
-    async function checkLogin() {
-      try {
-        await API.get("/check");
-        setIsLoggedIn(true);
-      } catch (err) {
-        setIsLoggedIn(false);
-      }
-    }
-
-    checkLogin();
-  }, []);
 
   return (
     <div className="icons">
@@ -54,6 +45,7 @@ const Icons = () => {
             My Products
           </Link>
         </li>
+
         {/* Login/Register */}
         <li>
           <i
