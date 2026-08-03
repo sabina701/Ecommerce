@@ -3,7 +3,7 @@ import API from "../api/axios";
 
 export const AuthContext = createContext();
 
-const AuthProvider = ({ children }) => {
+export function AuthProvider({ children }) {
   const [currentUser, setCurrentUser] = useState(null);
 
   useEffect(() => {
@@ -24,6 +24,4 @@ const AuthProvider = ({ children }) => {
       {children}
     </AuthContext.Provider>
   );
-};
-
-export default AuthProvider;
+}

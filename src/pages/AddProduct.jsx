@@ -64,6 +64,7 @@ const AddProduct = () => {
     async function fetchCategories() {
       try {
         const response = await API.get("/categories");
+        console.log(response.data); // add this
         setCategories(response.data.categories);
       } catch (err) {
         console.log(err);
