@@ -1,4 +1,3 @@
-import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "./css/index.css";
 import App from "./App.jsx";
@@ -8,15 +7,13 @@ import BtnProvider from "./context/BtnContext.jsx";
 import AuthProvider from "./context/AuthContext.jsx";
 
 createRoot(document.getElementById("root")).render(
-  <StrictMode>
-    <AuthProvider>
-      <ProductProvider>
-        <BtnProvider>
-          <HashRouter>
-            <App />
-          </HashRouter>
-        </BtnProvider>
-      </ProductProvider>
-    </AuthProvider>
-  </StrictMode>,
+  <AuthProvider>
+    <ProductProvider>
+      <BtnProvider>
+        <HashRouter>
+          <App />
+        </HashRouter>
+      </BtnProvider>
+    </ProductProvider>
+  </AuthProvider>,
 );
