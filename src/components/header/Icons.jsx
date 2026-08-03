@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import LoginRegister from "./LoginRegister";
 import API from "../../api/axios";
@@ -9,6 +9,7 @@ const Icons = () => {
   const navigate = useNavigate();
   const [showLogInRegister, setShowLogInRegister] = useState(false);
 
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   async function handleAddProduct(e) {
     e.preventDefault();
 
@@ -18,6 +19,18 @@ const Icons = () => {
       navigate("/add-product");
     }
   }
+  useEffect(() => {
+    async function checkLogin() {
+      try {
+        await API.get("/check");
+        setIsLoggedIn(true);
+      } catch (err) {
+        setIsLoggedIn(false);
+      }
+    }
+
+    checkLogin();
+  }, []);
 
   return (
     <div className="icons">
@@ -36,14 +49,25 @@ const Icons = () => {
           </Link>
         </li>
 
+        <li>
+          <Link to="/my-products" style={{ color: "white" }}>
+            My Products
+          </Link>
+        </li>
         {/* Login/Register */}
         <li>
           <i
             className="bi bi-person"
-            onClick={() => setShowLogInRegister((prev) => !prev)}
+            onClick={() => {
+              if (isLoggedIn) {
+                navigate("/profile");
+              } else {
+                setShowLogInRegister((prev) => !prev);
+              }
+            }}
           ></i>
 
-          {showLogInRegister && <LoginRegister />}
+          {!isLoggedIn && showLogInRegister && <LoginRegister />}
         </li>
 
         <li>

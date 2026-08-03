@@ -14,6 +14,10 @@ import CategoryProducts from "./pages/CategoryProducts";
 import EditProduct from "./pages/EditProduct";
 import AddProduct from "./pages/AddProduct";
 import Login from "./pages/Login";
+import MyProducts from "./pages/MyProducts";
+import Profile from "./pages/Profile";
+import Checkout from "./pages/Checkout";
+
 const MyRoute = () => {
   return (
     <Routes>
@@ -29,6 +33,10 @@ const MyRoute = () => {
         <Route path="/category-products/:id" element={<CategoryProducts />} />
         <Route path="/add-product" element={<AddProduct />} />
         <Route path="/edit/:id" element={<EditProduct />} />
+        <Route path="my-products" element={<MyProducts />} />
+        <Route path="profile" element={<Profile />} />
+        <Route path="checkout" element={<Checkout />} />
+
         <Route path="/login" element={<Login />} />
       </Route>
       <Route path="*" element={<Error404 />} />

@@ -197,32 +197,37 @@ const ProductDetail = () => {
           <hr />
           <h3>Customer Reviews</h3>
           <hr />
-
           {data.reviews?.length === 0 ? (
             <p>No reviews yet.</p>
           ) : (
-            data.reviews?.map((review) => (
-              <>
-                <p className="text-dark">
-                  <b>All Reviews</b>
-                </p>
-                <div className="row">
-                  <div className="card col-5 mb-3">
-                    <div className="card-body">
-                      <h5>Jane Doe</h5>
-                      <p className="card-text">{review.comment}</p>
-                      <p className="card-text">{review.rating} stars</p>
-                      <button
-                        className="btn btn-sm btn-danger mt-2"
-                        onClick={() => handleDeleteReview(review._id)}
-                      >
-                        Delete
-                      </button>
+            <>
+              <p className="text-dark">
+                <b>All Reviews</b>
+              </p>
+
+              <div className="row">
+                {data.reviews?.map((review) => (
+                  <div key={review._id} className="col-6 mb-3">
+                    <div className="card h-100">
+                      <div className="card-body">
+                        <h5>
+                          @ <b>{review.author?.username}</b>
+                        </h5>
+                        <p className="card-text">{review.comment}</p>
+                        <p className="card-text">{review.rating} stars</p>
+
+                        <button
+                          className="btn btn-sm btn-danger mt-2"
+                          onClick={() => handleDeleteReview(review._id)}
+                        >
+                          Delete
+                        </button>
+                      </div>
                     </div>
                   </div>
-                </div>
-              </>
-            ))
+                ))}
+              </div>
+            </>
           )}
         </div>
       </div>

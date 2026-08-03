@@ -1,24 +1,33 @@
-import React, { useReducer, useState } from "react";
+import React from "react";
 import "../css/table.css";
 import { useContext } from "react";
 import { BtnContext } from "../context/BtnContext";
-import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 const Cart = () => {
   const { state, dispatch } = useContext(BtnContext);
+  const navigate = useNavigate();
+
+  // Total items in cart
+  const totalItems = state.cart.reduce((sum, item) => sum + item.quantity, 0);
+
+  // Total price of cart
+  const totalPrice = state.cart.reduce(
+    (sum, item) => sum + item.price * item.quantity,
+    0,
+  );
 
   return (
     <>
       <div className="container">
-        <h2 className="">Products in Cart</h2>
-        {state.cart.length === 0 ? (
-          <p className="text-black ">Nothing in the cart</p>
-        ) : (
-          <table class="table table-striped ">
-            {state.cart.map((product) => {
-              console.log(product);
+        <h2>Products in Cart</h2>
 
-              return (
+        {state.cart.length === 0 ? (
+          <p className="text-black">Nothing in the cart</p>
+        ) : (
+          <>
+            <table className="table table-striped">
+              {state.cart.map((product) => (
                 <tbody key={product._id}>
                   <tr>
                     <td className="align-middle">
@@ -41,6 +50,7 @@ const Cart = () => {
                             payload: product._id,
                           })
                         }
+                        style={{ cursor: "pointer" }}
                       >
                         Remove
                       </p>
@@ -74,12 +84,36 @@ const Cart = () => {
                       </button>
                     </td>
 
-                    <td className="align-middle">Rs. {product.price}</td>
+                    <td className="align-middle">
+                      Rs. {product.price * product.quantity}
+                    </td>
                   </tr>
                 </tbody>
-              );
-            })}
-          </table>
+              ))}
+            </table>
+
+            {/* Order Summary */}
+            <div className="card p-4 mt-4 shadow-sm">
+              <h4>Order Summary</h4>
+
+              <div className="d-flex justify-content-between mb-2">
+                <span>Total Items</span>
+                <strong>{totalItems}</strong>
+              </div>
+
+              <div className="d-flex justify-content-between mb-3">
+                <span>Total Amount</span>
+                <strong>Rs. {totalPrice}</strong>
+              </div>
+
+              <button
+                className="btn btn-primary w-100"
+                onClick={() => navigate("/checkout")}
+              >
+                Proceed to Checkout
+              </button>
+            </div>
+          </>
         )}
       </div>
     </>

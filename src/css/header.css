@@ -28,3 +28,13 @@
     gap: 25px;
   }
 }
+.search-bar {
+  width: 350px;
+}
+
+.search-bar input {
+  border-radius: 15px;
+  padding: 15px 15px;
+  /* text-align: center; */
+  font-size: 16px;
+}

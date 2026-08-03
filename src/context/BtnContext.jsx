@@ -90,6 +90,11 @@ function reducer(state, action) {
         cart: state.cart.filter((product) => product._id !== action.payload),
       };
     }
+    case "CLEAR_CART":
+      return {
+        ...state,
+        cart: [],
+      };
 
     default:
       return state;
